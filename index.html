@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aviator real Game</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    #multiplier {
+      font-size: 50px;
+      margin: 20px;
+      color: yellow;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .bet { background: green; color: white; }
+    .cashout { background: red; color: white; }
+  </style>
+</head>
+<body>
+
+<h1>Aviator Demo ✈️</h1>
+
+<div id="multiplier">1.00x</div>
+
+<button class="bet" onclick="startGame()">Bet</button>
+<button class="cashout" onclick="cashOut()">Cash Out</button>
+
+<p id="result"></p>
+
+<script>
+let multiplier = 1.00;
+let interval;
+let isPlaying = false;
+
+function startGame() {
+  if (isPlaying) return;
+  isPlaying = true;
+  multiplier = 1.00;
+  document.getElementById("result").innerText = "";
+
+  interval = setInterval(() => {
+    multiplier += 0.05;
+    document.getElementById("multiplier").innerText = multiplier.toFixed(2) + "x";
+
+    // Random crash
+    if (Math.random() < 0.02) {
+      clearInterval(interval);
+      isPlaying = false;
+      document.getElementById("result").innerText = "💥 Crashed at " + multiplier.toFixed(2) + "x";
+    }
+
+  }, 100);
+}
+
+function cashOut() {
+  if (!isPlaying) return;
+  clearInterval(interval);
+  isPlaying = false;
+  document.getElementById("result").innerText = "✅ Cashed out at " + multiplier.toFixed(2) + "x";
+}
+</script>
+
+</body>
+</html>
